@@ -15,9 +15,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/hello')
+@app.route('/tmp')
 def hello():
-    return render_template('hello.html')
+    return render_template('tmp.html')
 
 @app.route('/http',methods=['GET','POST'])
 def Choose_Http():
@@ -29,7 +29,7 @@ def Choose_Http():
         print(host, port, delay, num)
         http_traffic_generation(host = host, port = int(port), delay = int(delay), num = int(num))
 
-    return render_template('index.html')
+    return render_template('http.html')
 
 @app.route('/dns',methods=['GET','POST'])
 def Choose_Dns():
