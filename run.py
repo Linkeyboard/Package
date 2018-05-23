@@ -51,6 +51,19 @@ def Choose_Ddos():
         ddos(host = host, port = int(port), num = int(num))
 
     return render_template('ddos.html')
+
+
+@app.route('/combine',methods=['GET','POST'])
+def Combine():
+    if request.method == 'POST':
+        host = request.form['host']
+        port = request.form['port']
+        delay = request.form['delay']
+        num = request.form['num']	
+        print(host, port, delay, num)
+        http_traffic_generation(host = host, port = int(port), delay = int(delay), num = int(num))
+
+    return render_template('combine.html')
 	
 if __name__ == "__main__":
     app.run(debug = True)

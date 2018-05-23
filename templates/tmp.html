@@ -1,6 +1,6 @@
-
 {% extends 'index.html' %}
 {% block body %}
+
 <div class="layui-body">
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
@@ -29,33 +29,13 @@
       <input type="text" name="Delay" lay-verify="delay" autocomplete="off" placeholder="请输入数据包发送延迟时间" class="layui-input" id="delayID">
     </div>
   </div>
-  <div class="layui-form-item">
-      <label class="layui-form-label">发送方式</label>
-      <div class="layui-input-block">
-        <input type="radio" name="I3" value="I31" title="数量" checked>
-        <input type="radio" name="I3" value="I32" title="流量">
-      </div>
-    </div>
     <div class="layui-form-item">
-    <label class="layui-form-label"></label>
+    <label class="layui-form-label">发送数量:</label>
     <div class="layui-input-block">
       <input type="text" name="Num" lay-verify="num" autocomplete="off" placeholder="请输入数据包发送数量" class="layui-input" id="numID">
     </div>
   </div>
-  <div class="layui-form-item">
-      <label class="layui-form-label">网络层协议</label>
-      <div class="layui-input-block">
-        <input type="radio" name="I1" value="IP" title="IP" checked>
-        <input type="radio" name="I1" value="ICMP" title="ICMP">
-      </div>
-    </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">传输层协议:</label>
-    <div class="layui-input-block">
-        <input type="radio" name="I2" value="TCP" title="TCP" checked>
-        <input type="radio" name="I2" value="UDP" title="UDP">
-      </div>
-  </div>
+  
   
   
   <div>
@@ -73,12 +53,50 @@ var form = layui.form
 ,layedit = layui.layedit
 ,laydate = layui.laydate;
 
+//日期
+laydate.render({
+  elem: '#date'
+});
+laydate.render({
+  elem: '#date1'
+});
+
+//创建一个编辑器
+var editIndex = layedit.build('LAY_demo_editor');
+
+//自定义验证规则
+form.verify({
+  title: function(value){
+    if(value.length < 5){
+      return '标题至少得5个字符啊';
+    }
+  }
+  ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+  ,content: function(value){
+    layedit.sync(editIndex);
+  }
+});
+
+//监听指定开关
+form.on('switch(switchTest)', function(data){
+  layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+    offset: '6px'
+  });
+  layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+});
+
+//监听提交
+form.on('submit(demo1)', function(data){
+  layer.alert(JSON.stringify(data.field), {
+    title: '最终的提交信息'
+  })
+  return false;
 });
 
 
+});
 </script>
   </div>
 </div>
-  
-  {% endblock %}
-  
+
+{% endblock %}
