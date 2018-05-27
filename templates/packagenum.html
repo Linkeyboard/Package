@@ -1,0 +1,107 @@
+{% extends 'index.html' %} {% block body %}
+<div class="layui-body">
+  <!-- 内容主体区域 -->
+  <div style="padding: 15px;">
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">ip地址:</label>
+        <div class="layui-input-block">
+          <input type="text" name="Host" lay-verify="host" autocomplete="off" placeholder="请输入服务器ip地址" class="layui-input" id="hostID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">端口号:</label>
+        <div class="layui-input-block">
+          <input type="text" name="Port" lay-verify="port" autocomplete="off" placeholder="请输入端口号" class="layui-input" id="portID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">背景流量</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="I3" value="I31" title="HTTP" id="HTTPck"checked>
+          <input type="checkbox" name="I3" value="I32" title="DNS" id="DNSck">
+        </div>
+      </div>
+
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">HTTP流量</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入HTTP流量包个数" class="layui-input"
+            id="HTTPnum">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">DNS流量</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入DNS流量包个数" class="layui-input"
+            id="DNSnum">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">攻击流量</label>
+        <div class="layui-input-block">
+          <input type="radio" name="I2" value="IP" title="DDOS" checked id="DDOSck">
+          <input type="radio" name="I2" value="ICMP" title="其他攻击" id="Otherck">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">攻击流量</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入攻击流量包个数" class="layui-input"
+            id="DDOSnum">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">发包顺序</label>
+        <div class="layui-input-block">
+          <input type="radio" name="I1" value="IP" title="顺序发送" id="Goodorder" checked>
+          <input type="radio" name="I1" value="ICMP" title="乱序发送" id="Massorder">
+        </div>
+      </div>
+      <br>
+      <div>
+        <button class="layui-btn layui-btn-radius" id="confirmation" type="button" style="margin-left:40px">确认</button>
+        <button class="layui-btn layui-btn-radius" id="recall" type="button" style="margin-left:20px">取消</button>
+      </div>
+    </form>
+
+    <script src="/static/layui-v2.2.6/layui/layui.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+      layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+          , layer = layui.layer
+          , layedit = layui.layedit
+          , laydate = layui.laydate;
+
+      });
+    </script>
+  </div>
+</div>
+<script>
+  $('#confirmation').click(function () {
+    var index = layer.load();
+    $.ajax({
+      type: "POST",//为post请求
+      url: "/sendnum",//这是我在后台接受数据的文件名
+      data: {
+        "host": $("#hostID").val(),
+        "port": $("#portID").val(),
+        "HTTPck": $("#HTTPck").is(":checked"),
+        "DNSck": $("#DNSck").is(":checked"),
+        "HTTPnum": $("#HTTPnum").val(),
+        "DNSnum": $("#DNSnum").val(),
+        "DDOSck": $("#DDOSck").is(":checked"),
+        "Otherck": $("#Otherck").is(":checked"),
+        "DDOSnum": $("#DDOSnum").val(),
+        "Goodorder": $("#Goodorder").is(":checked"),
+        "Massorder": $("#MassOrder").is(":checked"),
+      }, success: function (data) {
+        layer.alert('发送完毕', { icon: 1 });
+        layer.close(index);
+      },
+    });
+  })
+</script> {% endblock %}

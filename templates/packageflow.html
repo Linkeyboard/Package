@@ -1,14 +1,8 @@
- {% extends 'index.html' %} {% block body %}
+{% extends 'index.html' %} {% block body %}
 <div class="layui-body">
   <!-- 内容主体区域 -->
   <div style="padding: 15px;">
     <form class="layui-form" action="">
-      <div class="layui-form-item">
-        <label class="layui-form-label">脚本编号</label>
-        <div class="layui-input-block">
-          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入脚本id" class="layui-input" id="scriptID">
-        </div>
-      </div>
       <div class="layui-form-item">
         <label class="layui-form-label">ip地址:</label>
         <div class="layui-input-block">
@@ -22,43 +16,51 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">延迟时间:</label>
+        <label class="layui-form-label">背景流量</label>
         <div class="layui-input-block">
-          <input type="text" name="Delay" lay-verify="delay" autocomplete="off" placeholder="请输入数据包发送延迟时间" class="layui-input" id="delayID">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">发送方式</label>
-        <div class="layui-input-block">
-          <input type="radio" name="I3" value="I31" title="数量" checked>
-          <input type="radio" name="I3" value="I32" title="流量">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label"></label>
-        <div class="layui-input-block">
-          <input type="text" name="Num" lay-verify="num" autocomplete="off" placeholder="请输入数据包发送数量" class="layui-input" id="numID">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">网络层协议</label>
-        <div class="layui-input-block">
-          <input type="radio" name="I1" value="IP" title="IP" checked>
-          <input type="radio" name="I1" value="ICMP" title="ICMP">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">传输层协议:</label>
-        <div class="layui-input-block">
-          <input type="radio" name="I2" value="TCP" title="TCP" checked>
-          <input type="radio" name="I2" value="UDP" title="UDP">
+          <input type="checkbox" name="I3" value="I31" title="HTTP" checked>
+          <input type="checkbox" name="I3" value="I32" title="DNS">
         </div>
       </div>
 
 
+      <div class="layui-form-item">
+        <label class="layui-form-label">HTTP流量</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入HTTP流量包个数" class="layui-input" id="scriptID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">DNS流量</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入DNS流量包个数" class="layui-input" id="scriptID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">攻击流量</label>
+        <div class="layui-input-block">
+          <input type="radio" name="I1" value="IP" title="DDOS" checked>
+          <input type="radio" name="I1" value="ICMP" title="其他攻击">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">攻击流量</label>
+        <div class="layui-input-block">
+          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入攻击流量包个数" class="layui-input" id="scriptID">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">发包顺序</label>
+        <div class="layui-input-block">
+          <input type="radio" name="I1" value="IP" title="顺序发送" checked>
+          <input type="radio" name="I1" value="ICMP" title="乱序发送">
+        </div>
+      </div>
+      <br>
       <div>
-        <button class="layui-btn layui-btn-radius" id="confirmation" type="button">确认</button>
-        <button class="layui-btn layui-btn-radius" id="recall" type="button">取消</button>
+        <button class="layui-btn layui-btn-radius" id="confirmation" type="button" style="margin-left:40px">确认</button>
+        <button class="layui-btn layui-btn-radius" id="recall" type="button" style="margin-left:20px">取消</button>
       </div>
     </form>
 

