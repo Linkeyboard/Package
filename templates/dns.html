@@ -4,12 +4,6 @@
   <div style="padding: 15px;">
     <form class="layui-form" action="">
       <div class="layui-form-item">
-        <label class="layui-form-label">脚本编号</label>
-        <div class="layui-input-block">
-          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入脚本id" class="layui-input" id="scriptID">
-        </div>
-      </div>
-      <div class="layui-form-item">
         <label class="layui-form-label">原ip:</label>
         <div class="layui-input-block">
           <input type="text" name="srchost" lay-verify="host" autocomplete="off" placeholder="请输入原ip地址" class="layui-input" id="srchostID">
@@ -99,6 +93,7 @@
 <script>
   $('#confirmation').click(function () {
     var index = layer.load();
+    var mydate = new Date();
     $.ajax({
       type: "POST",//为post请求
       url: "/dns",//这是我在后台接受数据的文件名
@@ -108,7 +103,10 @@
         "qdcount": $("#qdcountID").val(),
         "qname": $("#qnameID").val(),
       },success:function(data){
-        layer.alert('发送完毕', { icon: 1 });
+        var mydate1 = new Date();
+        var tm = mydate1.getTime() - mydate.getTime();
+        var a = "发送" + $("#qdcountID").val() + "个数据包，耗时" + tm/1000 + "s"
+        layer.alert(a, { icon: 1 });
         layer.close(index);
       },
     });

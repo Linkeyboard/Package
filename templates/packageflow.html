@@ -18,8 +18,8 @@
       <div class="layui-form-item">
         <label class="layui-form-label">背景流量</label>
         <div class="layui-input-block">
-          <input type="checkbox" name="I3" value="I31" title="HTTP" checked>
-          <input type="checkbox" name="I3" value="I32" title="DNS">
+          <input type="checkbox" name="I3" value="I31" title="HTTP" id="HTTPck"checked>
+          <input type="checkbox" name="I3" value="I32" title="DNS" id="DNSck">
         </div>
       </div>
 
@@ -27,34 +27,55 @@
       <div class="layui-form-item">
         <label class="layui-form-label">HTTP流量</label>
         <div class="layui-input-block">
-          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入HTTP流量包个数" class="layui-input" id="scriptID">
+          <select name="city" lay-verify="required" id="HTTPflow">
+            <option value=""></option>
+            <option value="1">１k</option>
+            <option value="10">10k</option>
+            <option value="20">20k</option>
+            <option value="50">50k</option>
+            <option value="100">100k</option>
+          </select>
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">DNS流量</label>
         <div class="layui-input-block">
-          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入DNS流量包个数" class="layui-input" id="scriptID">
+          <select name="city" lay-verify="required" id="DNSflow">
+            <option value=""></option>
+            <option value="1">１k</option>
+            <option value="10">10k</option>
+            <option value="20">20k</option>
+            <option value="50">50k</option>
+            <option value="100">100k</option>
+          </select>
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">攻击流量</label>
         <div class="layui-input-block">
-          <input type="radio" name="I1" value="IP" title="DDOS" checked>
-          <input type="radio" name="I1" value="ICMP" title="其他攻击">
+          <input type="radio" name="I2" value="IP" title="DDOS" checked id="DDOSck">
+          <input type="radio" name="I2" value="ICMP" title="其他攻击" id="Otherck">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">攻击流量</label>
         <div class="layui-input-block">
-          <input type="text" name="scriptid" lay-verify="scriptid" autocomplete="off" placeholder="请输入攻击流量包个数" class="layui-input" id="scriptID">
+          <select name="city" lay-verify="required" id="DDOSflow"> 
+            <option value=""></option>
+            <option value="1">１k</option>
+            <option value="10">10k</option>
+            <option value="20">20k</option>
+            <option value="50">50k</option>
+            <option value="100">100k</option>
+          </select>
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">发包顺序</label>
         <div class="layui-input-block">
-          <input type="radio" name="I1" value="IP" title="顺序发送" checked>
-          <input type="radio" name="I1" value="ICMP" title="乱序发送">
+          <input type="radio" name="I1" value="IP" title="顺序发送" id="Goodorder" checked>
+          <input type="radio" name="I1" value="ICMP" title="乱序发送" id="Massorder">
         </div>
       </div>
       <br>
@@ -82,13 +103,20 @@
     var index = layer.load();
     $.ajax({
       type: "POST",//为post请求
-      url: "/http",//这是我在后台接受数据的文件名
+      url: "/sendflow",//这是我在后台接受数据的文件名
       data: {
         "host": $("#hostID").val(),
         "port": $("#portID").val(),
-        "delay": $("#delayID").val(),
-        "num": $("#numID").val(),
-      },success:function(data){
+        "HTTPck": $("#HTTPck").is(":checked"),
+        "DNSck": $("#DNSck").is(":checked"),
+        "HTTPflow": $("#HTTPflow").val(),
+        "DNSflow": $("#DNSflow").val(),
+        "DDOSck": $("#DDOSck").is(":checked"),
+        "Otherck": $("#Otherck").is(":checked"),
+        "DDOSflow": $("#DDOSflow").val(),
+        "Goodorder": $("#Goodorder").is(":checked"),
+        "Massorder": $("#MassOrder").is(":checked"),
+      }, success: function (data) {
         layer.alert('发送完毕', { icon: 1 });
         layer.close(index);
       },

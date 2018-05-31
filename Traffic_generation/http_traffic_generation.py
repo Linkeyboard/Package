@@ -3,7 +3,6 @@ import time
 from scapy.all import *
 
 
-tmp = 1
 
 def http_traffic_generation(host = "127.0.0.1", port = 8000, delay = 0, num = 1):
     h = hc.HTTPConnection(host, port)
@@ -18,16 +17,33 @@ def http_traffic_generation(host = "127.0.0.1", port = 8000, delay = 0, num = 1)
 
 
 def scapy_http(host = "127.0.0.1", port = 8000, delay = 0, num = 1):
-    global tmp
-    tmp = (tmp + 1) % 5000
-    t = num
+    t = random.randint(1, 20000)
     while(num):
-       a = IP()/TCP(sport = tmp)/"GET / HTTP/1.0\r\n\r\n"
+       a = IP()/TCP(sport = t)/"GET / HTTP/1.0\r\n\r\n"
+       t = (t + 1) % 20000
        send(a)
        num = num - 1
        time.sleep(delay)
 
 
+def scapy_tcp(host = "127.0.0.1", port = 8000, delay = 0, num = 1):
+    t = random.randint(1, 20000)
+    while(num):
+       a = IP()/TCP(sport = t)
+       t = (t + 1) % 20000
+       send(a)
+       num = num - 1
+       time.sleep(delay)
+
+
+def scapy_udp(host = "127.0.0.1", port = 8000, delay = 0, num = 1):
+    t = random.randint(1, 20000)
+    while(num):
+       a = IP()/UDP(sport = t)
+       t = (t + 1) % 20000
+       send(a)
+       num = num - 1
+       time.sleep(delay)
 
 
 if __name__ == "__main__":

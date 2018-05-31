@@ -1,6 +1,7 @@
 from scapy.all import *
+import time
 
-def dns_packets(srchost = '127.0.0.1', dsthost = '127.0.0.1', qdcount = 1, qname = 'www.qq.com'):
+def dns_packets(srchost = '127.0.0.1', dsthost = '127.0.0.1', qdcount = 1, qname = 'www.qq.com', delay = 0):
     while (qdcount):
         qdcount -= 1
         a = IP(dst = dsthost,src = srchost)
@@ -9,6 +10,9 @@ def dns_packets(srchost = '127.0.0.1', dsthost = '127.0.0.1', qdcount = 1, qname
         c.qd=DNSQR(qname=qname,qtype=1,qclass=1)
         p = a/b/c
         send(p)
+        print("DNS")
+        if delay != 0:
+            time.sleep(delay)
 
 
 if __name__ == "__main__":
